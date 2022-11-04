@@ -5,6 +5,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 class Game {
+  bool isLoading = false;
   int rounds = 3;
   bool isOver = false;
   int lives = 3;
@@ -18,24 +19,25 @@ class Game {
   get listOfChoices => modes;
 
   void restartGame() {
-    rounds = 5;
+    rounds = 3;
     lives = 3;
     isOver = false;
     correctAnswer = "";
   }
 
   bool checkForAnswer(String selectedAnswer) {
-    if (lives == 0) isOver = true;
+    if (lives < 1) {
+      isOver = true;
+    }
+    if (isLoading) isLoading = false;
     if (selectedAnswer == correctAnswer) {
-      modes![currentMode!] = {
-        "0D85AB": 0xff0D85AB,
-        "2C6374": 0xff2C6374,
-        "8E541F": 0xff8E541F
-      };
+      modes![currentMode!] = db[rounds - 1]!;
       var random = Random().nextInt(2);
       correctAnswer = modes![currentMode]?.keys.toList()[random];
+      rounds--;
       return true;
     }
+    lives--;
     return false;
   }
 
@@ -87,7 +89,7 @@ class Game {
 
 enum Mode { RGBA, HEX_CODE, HSL }
 
-var db = {
-  1: {"0D85AB": "0xff0D85AB", "2C6374": "0xff2C6374", "8E541F": "0xff8E541F"},
-  2: {}
+Map<int, Map<String, int>> db = {
+  1: {"0D85AB": 0xff0D85AB, "2C6374": 0xff2C6374, "8E541F": 0xff8E541F},
+  2: {"3FC65C": 0xff3FC65C, "A6E3B3": 0xffA6E3B3, "E55353": 0xffE55353}
 };

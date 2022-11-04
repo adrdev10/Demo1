@@ -64,16 +64,16 @@ class ColorGamePageState extends State<ColorGamePage> {
                             var clickedAnswer = widget
                                 .game.modes![widget.game.currentMode]!.keys
                                 .toList()[index];
-                            if (game!.checkForAnswer(clickedAnswer)) {
+                            if (!game!.checkForAnswer(clickedAnswer)) {
                               ScaffoldMessenger.of(context).showSnackBar(
                                   const SnackBar(
                                       content: Text("Wrong answer")));
                               setState(() {
-                                widget.game.lives--;
+                                game?.isLoading = true;
                               });
                             } else {
                               setState(() {
-                                widget.game.rounds--;
+                                game?.isLoading = true;
                               });
                             }
                           },
