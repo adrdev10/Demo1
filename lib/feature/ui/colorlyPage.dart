@@ -32,7 +32,6 @@ class ColorfyPageState extends State<ColorfyPage> {
                     child: Text("Choose a mode you’d like to play:")),
                 Positioned.fill(
                   top: 200,
-                  left: MediaQuery.of(context).size.width * .4,
                   child: Container(
                     alignment: Alignment.center,
                     child: ListView(
